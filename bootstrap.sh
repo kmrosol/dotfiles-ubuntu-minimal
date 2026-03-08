@@ -1,3 +1,7 @@
+DOTFILES_DIR="$HOME/dotfiles-ubuntu-minimal"
+PACKER_NVIM_DIR="$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim"
+STOW_PACKAGES_PATH=$DOTFILES_DIR/packages
+
 # =============================
 # Install packages
 # =============================
