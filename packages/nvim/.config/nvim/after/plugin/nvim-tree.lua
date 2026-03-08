@@ -1,0 +1,59 @@
+-- local tree = require'nvim-tree'
+--
+-- local function set_up(bufnr)
+--   local api = require "nvim-tree.api"
+--
+--   local function opts(desc)
+--     return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+--   end
+--
+--   -- default mappings
+--   api.config.mappings.default_on_attach(bufnr)
+--   local function open_file_or_change_root_node()
+--     local node = require'nvim-tree.lib'.get_node_at_cursor()
+--     if node == nil then 
+--       return
+--     end
+--     
+--       if node.type == 'file' then
+--         api.node.open.replace_tree_buffer()
+--         return
+--       end
+--       api.tree.change_root_to_node()
+--       return
+--   end
+--
+--   -- custom mappings
+--   -- vim.keymap.set('n', '<C-t>', api.tree.change_root_to_parent,        opts('Up'))
+--   vim.keymap.set('n', '?',     api.tree.toggle_help,                  opts('Help'))
+--   vim.keymap.set('n', '<CR>',   open_file_or_change_root_node,   opts('Open: In Place'))
+--   vim.keymap.set('n', 'h',   api.tree.change_root_to_parent,   opts('Open: In Place'))
+--   vim.keymap.set('n', 'l',   open_file_or_change_root_node,   opts('Open: In Place'))
+--   -- vim.keymap.set('n', '<CR>',   api.node.open.tab,                   opts('Open: New Tab'))
+--   --tree.change_root_to_node()
+-- end
+--
+-- tree.setup({
+--   sort = {
+--     sorter = "case_sensitive",
+--   },
+--   actions = {
+--
+--   },
+--   view = {
+--     -- adaptive_size = true
+--     width = 100,
+--     -- side = 'left',
+--   },
+--   renderer = {
+--     group_empty = true,
+--   },
+--   on_attach = set_up
+-- })
+--
+-- local api = require "nvim-tree.api"
+-- vim.keymap.set("n", "sf", function() api.tree.find_file({current_window = true, open = true, focus = true}) end, { noremap = true })
+-- -- vim.keymap.set("n", "sf", function() api.tree.open({ current_window = true }) end, { noremap = true })
+-- -- vim.keymap.set("n", "<C-e>", function() api.node.open.replace_tree_buffer() }, opts("Open: In Place"))
+--
+-- vim.api.nvim_get_current_win()

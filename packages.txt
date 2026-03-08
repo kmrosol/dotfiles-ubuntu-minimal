@@ -1,0 +1,15 @@
+neovim
+tmux
+git
+curl
+git
+ripgrep
+fd-find
+build-essential
+unzip
+nodejs
+npm
+mise
+stow
+zsh
+tig
