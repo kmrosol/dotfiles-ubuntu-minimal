@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 DOTFILES_DIR="$HOME/dotfiles-ubuntu-minimal"
 PACKER_NVIM_DIR="$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim"
 STOW_PACKAGES_PATH=$DOTFILES_DIR/packages
@@ -37,6 +39,15 @@ fi
 # Install zsh prompt
 mkdir -p "$HOME/.zsh"
 git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
+
+# Change default shell to zsh
+if [ "$SHELL" != "$(which zsh)" ]; then
+    echo "Changing default shell to zsh..."
+    chsh -s $(which zsh)
+    echo "Shell changed to zsh. Please log out and log back in for the change to take effect."
+else
+    echo "Default shell is already zsh."
+fi
 
 # =============================
 # Install runtimes
