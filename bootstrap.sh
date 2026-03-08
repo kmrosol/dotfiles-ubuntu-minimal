@@ -4,6 +4,8 @@
 sudo apt update
 sudo apt install -y $(cat packages.txt)
 
+curl -fsSL https://tailscale.com/install.sh | sh
+
 # =============================
 # Link configs
 # =============================
