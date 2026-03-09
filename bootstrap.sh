@@ -18,15 +18,19 @@ fi
 sudo apt update
 sudo xargs -a packages.txt apt install -y
 
-# =============================
 # Install mise
-# =============================
 sudo apt update -y && sudo apt install -y curl
 sudo install -dm 755 /etc/apt/keyrings
 curl -fSs https://mise.jdx.dev/gpg-key.pub | sudo tee /etc/apt/keyrings/mise-archive-keyring.asc 1> /dev/null
 echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.asc] https://mise.jdx.dev/deb stable main" | sudo tee /etc/apt/sources.list.d/mise.list
 sudo apt update -y
 sudo apt install -y mise
+
+# Install neovim
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+tar xzf nvim-linux-x86_64.tar.gz
+sudo mv nvim-linux-x86_64 /opt/nvim
+sudo ln -s /opt/nvim/bin/nvim /usr/local/bin/nvim
 
 # =============================
 # Link configs
@@ -109,3 +113,10 @@ fi
 
 # Install python provider for neovim
 pip install --user pynvim
+
+# =============================
+# Change shell
+# =============================
+if command -v zsh >/dev/null 2>&1 && [ "$SHELL" != "$(command -v zsh)" ]; then
+  sudo chsh -s "$(command -v zsh)" "$USER"
+fi
