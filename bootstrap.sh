@@ -1,14 +1,22 @@
-#!/usr/bin/env zsh
-
 DOTFILES_DIR="$HOME/dotfiles-ubuntu-minimal"
 PACKER_NVIM_DIR="$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim"
 STOW_PACKAGES_PATH=$DOTFILES_DIR/packages
 
 # =============================
+# Clone dotfiles Repository
+# =============================
+if [ ! -d "$DOTFILES_DIR" ]; then
+    echo "Cloning dotfiles repository..."
+    git clone https://github.com/kmrosol/dotfiles-ubuntu-minimal.git "$DOTFILES_DIR"
+else
+    echo "Skipping cloning dotfiles. It already exists."
+fi
+
+# =============================
 # Install packages
 # =============================
 sudo apt update
-sudo apt install -y $(cat packages.txt)
+sudo apt install -y $(cat $DOTFILES_DIR/packages.txt)
 
 curl -fsSL https://tailscale.com/install.sh | sh
 
@@ -37,8 +45,13 @@ else
 fi
 
 # Install zsh prompt
-mkdir -p "$HOME/.zsh"
-git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
+if [ ! -d "$HOME/.zsh/pure" ]; then
+    echo "Installing pure prompt..."
+    mkdir -p "$HOME/.zsh"
+    git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
+else
+    echo "pure prompt is already installed."
+fi
 
 # Change default shell to zsh
 if [ "$SHELL" != "$(which zsh)" ]; then
@@ -49,14 +62,27 @@ else
     echo "Default shell is already zsh."
 fi
 
+# Install mise
+curl https://mise.run | sh
+
 # =============================
 # Install runtimes
 # =============================
+
+# Add mise to PATH for current session
+export PATH="$HOME/.local/bin:$PATH"
+
 if command -v mise &> /dev/null; then
     echo "Setting up mise tools..."
 
-    # Activate mise to update PATH
-    eval "$(mise activate zsh)"
+    # Activate mise to update PATH (detect current shell)
+    if [ -n "$BASH_VERSION" ]; then
+        eval "$(mise activate bash)"
+    elif [ -n "$ZSH_VERSION" ]; then
+        eval "$(mise activate zsh)"
+    else
+        eval "$(mise activate sh)"
+    fi
 
     # Install tools defined in mise.toml or .mise.toml
     if [ -f ~/.config/mise/config.toml ] ; then
@@ -71,4 +97,4 @@ else
 fi
 
 # Install python provider for neovim
-pip install pynvim
+pip install --user pynvim
