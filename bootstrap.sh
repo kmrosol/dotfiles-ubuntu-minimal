@@ -16,9 +16,7 @@ fi
 # Install packages
 # =============================
 sudo apt update
-sudo apt install -y $(cat $DOTFILES_DIR/packages.txt)
-
-curl -fsSL https://tailscale.com/install.sh | sh
+sudo xargs -a packages.txt apt install -y
 
 # =============================
 # Link configs
@@ -29,6 +27,9 @@ fi
 
 echo "Linking configs..."
 stow --ignore=DS_Store -v -d $STOW_PACKAGES_PATH -t ~ $(ls $STOW_PACKAGES_PATH)
+
+# Install tailscale
+curl -fsSL https://tailscale.com/install.sh | sh
 
 # =============================
 # Setup tools
@@ -70,7 +71,7 @@ curl https://mise.run | sh
 # =============================
 
 # Add mise to PATH for current session
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin/mise:$PATH"
 
 if command -v mise &> /dev/null; then
     echo "Setting up mise tools..."
