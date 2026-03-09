@@ -9,7 +9,7 @@ build-essential
 unzip
 nodejs
 npm
-mise
 stow
 zsh
 tig
+fzf
