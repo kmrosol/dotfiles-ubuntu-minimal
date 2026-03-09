@@ -1,4 +1,5 @@
 DOTFILES_DIR="$HOME/dotfiles-ubuntu-minimal"
+APT_PACKAGE_DEF=$DOTFILES_DIR/packages.txt
 PACKER_NVIM_DIR="$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim"
 STOW_PACKAGES_PATH=$DOTFILES_DIR/packages
 
@@ -16,7 +17,7 @@ fi
 # Install packages
 # =============================
 sudo apt update
-sudo xargs -a packages.txt apt install -y
+sudo xargs -a $APT_PACKAGE_DEF apt install -y
 
 # Install mise
 sudo apt update -y && sudo apt install -y curl
